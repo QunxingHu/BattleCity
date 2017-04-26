@@ -139,6 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Graphic.h" />
+    <ClInclude Include="MainTank.h" />
+    <ClInclude Include="Tank.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Graphic.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainTank.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

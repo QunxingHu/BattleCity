@@ -14,6 +14,9 @@ foreach (src_dir ${SRC_DIRS})
 	file(GLOB srcs ${src_dir}/*.cpp)
 	set(SRC_LIST ${SRC_LIST} ${srcs})
 endforeach()
+
 message("SRC_LIST: ${SRC_LIST}")
+
 include_directories(${PRIVATE_INCLUDE_DIRS})
+
 add_executable(BattleCity ${SRC_LIST})

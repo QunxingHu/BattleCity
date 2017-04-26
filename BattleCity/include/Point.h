@@ -2,21 +2,22 @@
 #ifndef __POINT_H__
 #define __POINT_H__
 /*
-* 定义 point 类， 标示位置
+* 定义 Point 类， 标示位置
 */
 class Point
 {
 public:
-	Point();
+	Point(int x, int y);
 	~Point();
 
 	void Set(int x, int y);
 	void SetX(int x);
 	void SetY(int y);
-	int GetX();
-	int GetY();
+	int GetX() const;
+	int GetY() const;
 
 	Point& operator=(const Point&p);
+	bool operator==(const Point&p);
 
 private:
 	int m_x;

@@ -4,14 +4,15 @@
 
 #include "Tank.h"
 
+
 class MainTank : public Tank
 {
 public:
 	MainTank(){
-		m_x = 400;
-		m_y = 300;
-		m_color = WHITE;
+		m_pos.Set(400,300);
 		m_direction = Direction::UP;
+		this->CalculateSpace();
+		m_color = YELLOW;
 		m_step = 1;
 	}
 	~MainTank() {}
@@ -24,11 +25,9 @@ public:
 	void SetDirection(Direction dir);
 
 protected:
-	/* 绘制坦克主体
-	* @style: 1 向上方向的坦克形状  |口|
-	*		  2 左右方向的坦克形状   亘
-	*/
-	void DrawTankBody(int style);
+	// 绘制坦克主体
+	void DrawTankBody();
+	void CalculateSpace();
 };
 
 #endif // !__MAIN_TANK_

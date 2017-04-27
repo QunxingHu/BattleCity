@@ -8,6 +8,8 @@
 */
 
 #include "Graphic.h"
+#include "Point.h"
+#include "Rect.h"
 
 // 移动方向定义
 enum Direction
@@ -27,9 +29,10 @@ public:
 	virtual void Move() = 0;
 
 protected:
-	// 当前坐标
-	int m_x;
-	int m_y;
+	// 计算势力范围
+	virtual void CalculateSpace() = 0;
+	Point m_pos;	// 位置点
+	Rect m_space;	// 形状范围
 	// 坦克颜色
 	COLORREF m_color;
 	// 移动方向

@@ -6,11 +6,11 @@ Rect::Rect(const Point &s, const Point &e) {
 }
 Rect::Rect(int x1, int y1, int x2, int y2)
 {
-	m_startPoint = Point(x1, y1);
-	m_endPoint = Point(x2, y2);
+	m_startPoint.Set(x1, y1);
+	m_endPoint.Set(x2, y2);
 }
 
-void Rect::Set(int x1, int x2, int y1, int y2)
+void Rect::Set(int x1, int y1, int x2, int y2)
 {
 	m_startPoint.Set(x1, y1);
 	m_endPoint.Set(x2, y2);

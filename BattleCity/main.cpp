@@ -72,6 +72,7 @@ void main()
 		if (!skip)
 		{
 			cleardevice();
+			Graphic::DrawBattleSpace();
 			mainTank.Move();
 			mainTank.Display();
 		}

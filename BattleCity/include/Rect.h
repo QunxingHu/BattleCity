@@ -9,7 +9,7 @@
 class Rect
 {
 public:
-	Rect(int x1, int y1, int x2, int y2);
+	Rect(int x1=0, int y1=0, int x2=0, int y2=0);
 	Rect(const Point& start, const Point& end);
 	~Rect();
 

@@ -6,8 +6,12 @@
 
 #include "Graphic.h"
 #include "MainTank.h"
+#include "EnemyTank.h"
 
 using namespace std;
+
+#define MAX_TANKS 15
+
 
 void main()
 {
@@ -23,7 +27,13 @@ void main()
 	// 暂停标记
 	bool skip = false;
 
-
+	// 创建敌方坦克
+	srand((unsigned)time(NULL));
+	Tank* pEnemyTank[MAX_TANKS];
+	for (int i = 0; i < MAX_TANKS; i++)
+	{
+		pEnemyTank[i] = new EnemyTank();
+	}
 	while (loop)
 	{
 		if (_kbhit())
@@ -75,9 +85,19 @@ void main()
 			Graphic::DrawBattleSpace();
 			mainTank.Move();
 			mainTank.Display();
+			for (int i = 0; i < MAX_TANKS; i++)
+			{
+				pEnemyTank[i]->Move();
+				pEnemyTank[i]->Display();
+			}
 		}
 
 		Sleep(50);
+	}
+
+	for (int i = 0; i < MAX_TANKS; i++)
+	{
+		delete pEnemyTank[i];
 	}
 	Graphic::Destory();
 }

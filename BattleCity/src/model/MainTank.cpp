@@ -64,40 +64,34 @@ void MainTank::Display()
 
 void MainTank::Move()
 {
-	int m_x = m_pos.GetX();
-	int m_y = m_pos.GetY();
-
 	// Åöµ½±ßÔµºó£¬Í£ÔÚ±ßÔµ
 	switch (m_direction)
 	{
-		case UP:
-			m_y -= m_step;
-			if (m_y < 0)
-				m_y = 6;
-			m_pos.SetY(m_y);
-			break;
-		case DOWN:
-			m_y += m_step;
-			if (m_y > Graphic::GetBattleSpace().GetEndPoint().GetY())
-				m_y = Graphic::GetBattleSpace().GetEndPoint().GetY() - 6;
-			m_pos.SetY(m_y);
-			break;
-		case LEFT:
-			m_x -= m_step;
-			if (m_x < 0)
-				m_x = 6;
-			m_pos.SetX(m_x);
-			break;
-		case RIGHT:
-			m_x += m_step;
-			if (m_x > Graphic::GetBattleSpace().GetEndPoint().GetX())
-				m_x = Graphic::GetBattleSpace().GetEndPoint().GetX() - 6;
-			m_pos.SetX(m_x);
-			break;
-		default:
-			break;
+	case UP:
+		m_pos.SetY(m_pos.GetY() - m_step);
+		if (m_space.GetStartPoint().GetY() < Graphic::GetBattleSpace().GetStartPoint().GetY())
+			m_pos.SetY(m_pos.GetY() + m_step);
+		break;
+	case DOWN:
+		m_pos.SetY(m_pos.GetY() + m_step);
+		if (m_space.GetEndPoint().GetY() > Graphic::GetBattleSpace().GetEndPoint().GetY())
+			m_pos.SetY(m_pos.GetY() - m_step);
+		break;
+	case LEFT:
+		m_pos.SetX(m_pos.GetX() - m_step);
+		if (m_space.GetStartPoint().GetX() < Graphic::GetBattleSpace().GetStartPoint().GetX())
+			m_pos.SetX(m_pos.GetX() + m_step);
+		break;
+	case RIGHT:
+		m_pos.SetX(m_pos.GetX() + m_step);
+		if (m_space.GetEndPoint().GetX() > Graphic::GetBattleSpace().GetEndPoint().GetX())
+			m_pos.SetX(m_pos.GetX() - m_step);
+		break;
+	default:
+		break;
 	}
-	this->CalculateSpace();
+
+	CalculateSpace();
 }
 
 void MainTank::CalculateSpace()

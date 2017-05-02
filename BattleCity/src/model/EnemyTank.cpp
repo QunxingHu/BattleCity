@@ -7,6 +7,7 @@ void EnemyTank::GenRandomTank()
 	m_color = WHITE;
 	m_direction = (Direction)(Direction::UP + (rand() % 4));
 	m_step = 2;
+	m_stepCnt = rand() % MAX_STEP; // 起始步数随机
 }
 
 void EnemyTank::Display()
@@ -52,34 +53,49 @@ void EnemyTank::Display()
 	setfillcolor(fill_color_save);
 }
 
+// 碰壁后或者到达最大步数时，随机转向
 void EnemyTank::Move()
 {
 	switch (m_direction)
 	{
 	case UP:
 		m_pos.SetY(m_pos.GetY() - m_step);
-		if (m_pos.GetY() < Graphic::GetBattleSpace().GetStartPoint().GetY())
-			m_pos.SetY(Graphic::GetBattleSpace().GetEndPoint().GetY() - 1);
+		if (m_pos.GetY() < Graphic::GetBattleSpace().GetStartPoint().GetY()) {
+			m_pos.SetY(m_pos.GetY() + m_step);
+			RandomDir();
+		}
 		break;
 	case DOWN:
 		m_pos.SetY(m_pos.GetY() + m_step);
-		if (m_pos.GetY() > Graphic::GetBattleSpace().GetEndPoint().GetY())
-			m_pos.SetY(Graphic::GetBattleSpace().GetStartPoint().GetY() + 1);
+		if (m_pos.GetY() > Graphic::GetBattleSpace().GetEndPoint().GetY()) {
+			m_pos.SetY(m_pos.GetY() - m_step);
+			RandomDir();
+		}
+			
 		break;
 	case LEFT:
 		m_pos.SetX(m_pos.GetX() - m_step);
-		if (m_pos.GetX() < Graphic::GetBattleSpace().GetStartPoint().GetX())
-			m_pos.SetX(Graphic::GetBattleSpace().GetEndPoint().GetX() - 1);
+		if (m_pos.GetX() < Graphic::GetBattleSpace().GetStartPoint().GetX()) {
+			m_pos.SetX(m_pos.GetX() + m_step);
+			RandomDir();
+		}
 		break;
 	case RIGHT:
 		m_pos.SetX(m_pos.GetX() + m_step);
-		if (m_pos.GetX() > Graphic::GetBattleSpace().GetEndPoint().GetX())
-			m_pos.SetX(Graphic::GetBattleSpace().GetStartPoint().GetX() + 1);
+		if (m_pos.GetX() > Graphic::GetBattleSpace().GetEndPoint().GetX()) {
+			m_pos.SetX(m_pos.GetX() - m_step);
+			RandomDir();
+		}
 		break;
 	default:
 		break;
 	}
 	CalculateSpace();
+	m_stepCnt++;
+	if (m_stepCnt >= MAX_STEP) {
+		m_stepCnt = 0;
+		RandomDir();
+	}
 }
 
 void EnemyTank::CalculateSpace()
@@ -97,4 +113,9 @@ void EnemyTank::CalculateSpace()
 	default:
 		break;
 	}
+}
+
+void EnemyTank::RandomDir()
+{
+	m_direction = (Direction)(Direction::UP + (rand() % 4));
 }

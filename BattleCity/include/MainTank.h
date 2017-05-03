@@ -3,17 +3,17 @@
 #define __MAIN_TANK_
 
 #include "Tank.h"
-
+#include "Bullet.h"
 
 class MainTank : public Tank
 {
 public:
 	MainTank(){
 		m_pos.Set(400,300);
-		m_direction = Direction::UP;
+		m_dir = Direction::UP;
 		this->CalculateSpace();
 		m_color = YELLOW;
-		m_step = 1;
+		m_step = 4;
 	}
 	~MainTank() {}
 
@@ -24,6 +24,8 @@ public:
 	// 设置移动方向
 	void SetDirection(Direction dir);
 
+	// shoot
+	void Shoot(std::list<Object*>& lstBullets);
 protected:
 	// 绘制坦克主体
 	void DrawTankBody();

@@ -34,6 +34,10 @@ void main()
 	{
 		pEnemyTank[i] = new EnemyTank();
 	}
+	// 子弹
+	std::list<Object*> lstBullets;
+	lstBullets.clear();
+
 	while (loop)
 	{
 		if (_kbhit())
@@ -66,6 +70,7 @@ void main()
 					break;
 				// Space
 				case 32:
+					mainTank.Shoot(lstBullets);
 					break;
 				// Enter : 暂停 或 开始
 				case 13:
@@ -90,14 +95,32 @@ void main()
 				pEnemyTank[i]->Move();
 				pEnemyTank[i]->Display();
 			}
+			
+			for (std::list<Object*>::iterator it = lstBullets.begin(); it != lstBullets.end();) {
+				(*it)->Move();
+				if ((*it)->IsDisappear()) {
+					delete *it;
+					it = lstBullets.erase(it);
+					continue;
+				}
+				(*it)->Display();
+				it++;
+			}
 		}
 
-		Sleep(50);
+		Sleep(100);
 	}
 
 	for (int i = 0; i < MAX_TANKS; i++)
 	{
 		delete pEnemyTank[i];
 	}
+
+	for (std::list<Object*>::iterator it = lstBullets.begin(); it != lstBullets.end(); it++)
+	{
+		delete *it;
+	}
+	lstBullets.clear();
+
 	Graphic::Destory();
 }

@@ -5,7 +5,7 @@ void EnemyTank::GenRandomTank()
 	m_pos.SetX(rand() % Graphic::GetBattleSpace().GetWidth());
 	m_pos.SetY(rand() % Graphic::GetBattleSpace().GetHeight());
 	m_color = WHITE;
-	m_direction = (Direction)(Direction::UP + (rand() % 4));
+	m_dir = (Direction)(Direction::UP + (rand() % 4));
 	m_step = 2;
 	m_stepCnt = rand() % MAX_STEP; // 起始步数随机
 }
@@ -31,7 +31,7 @@ void EnemyTank::Display()
 	fillrectangle(m_space.GetEndPoint().GetX() - 4, m_space.GetEndPoint().GetY() - 4,
 		m_space.GetEndPoint().GetX(), m_space.GetEndPoint().GetY());
 
-	switch (m_direction)
+	switch (m_dir)
 	{
 	case UP:
 		line(m_pos.GetX(), m_pos.GetY(), m_pos.GetX(), m_pos.GetY() - 15);
@@ -56,7 +56,7 @@ void EnemyTank::Display()
 // 碰壁后或者到达最大步数时，随机转向
 void EnemyTank::Move()
 {
-	switch (m_direction)
+	switch (m_dir)
 	{
 	case UP:
 		m_pos.SetY(m_pos.GetY() - m_step);
@@ -100,7 +100,7 @@ void EnemyTank::Move()
 
 void EnemyTank::CalculateSpace()
 {
-	switch (m_direction)
+	switch (m_dir)
 	{
 	case UP:
 	case DOWN:
@@ -117,5 +117,5 @@ void EnemyTank::CalculateSpace()
 
 void EnemyTank::RandomDir()
 {
-	m_direction = (Direction)(Direction::UP + (rand() % 4));
+	m_dir = (Direction)(Direction::UP + (rand() % 4));
 }

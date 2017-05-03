@@ -2,7 +2,7 @@
 
 void MainTank::SetDirection(Direction dir)
 {
-	m_direction = dir;
+	m_dir = dir;
 }
 
 void MainTank::DrawTankBody()
@@ -12,7 +12,7 @@ void MainTank::DrawTankBody()
 	fillrectangle(m_x - 6, m_y - 6, m_x + 6, m_y + 6); //坦克主体
 	
 	// 绘制履带
-	switch (m_direction)
+	switch (m_dir)
 	{
 	case UP:
 	case DOWN:
@@ -43,7 +43,7 @@ void MainTank::Display()
 	int m_x = m_pos.GetX();
 	int m_y = m_pos.GetY();
 
-	switch (m_direction)
+	switch (m_dir)
 	{
 		case UP:
 			line(m_x, m_y -15 , m_x, m_y); // 绘制坦克炮杆
@@ -65,7 +65,7 @@ void MainTank::Display()
 void MainTank::Move()
 {
 	// 碰到边缘后，停在边缘
-	switch (m_direction)
+	switch (m_dir)
 	{
 	case UP:
 		m_pos.SetY(m_pos.GetY() - m_step);
@@ -96,7 +96,7 @@ void MainTank::Move()
 
 void MainTank::CalculateSpace()
 {
-	switch (m_direction)
+	switch (m_dir)
 	{
 	case UP:
 	case DOWN:
@@ -109,4 +109,11 @@ void MainTank::CalculateSpace()
 	default:
 		break;
 	}
+}
+
+void MainTank::Shoot(std::list<Object*>& lstBullets)
+{
+	Bullet* pBullet = new Bullet(m_pos, m_dir, m_color);
+
+	lstBullets.push_back(pBullet);
 }

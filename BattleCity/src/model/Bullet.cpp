@@ -58,7 +58,7 @@ void Bullet::Move()
 		CalculateSpace();
 		if (m_space.GetEndPoint().GetX() > Graphic::GetBattleSpace().GetEndPoint().GetX())
 		{
-			m_pos.SetX(Graphic::GetBattleSpace().GetEnd:wqPoint().GetX());
+			m_pos.SetX(Graphic::GetBattleSpace().GetEndPoint().GetX());
 			m_disappear = true;
 		}
 		break;

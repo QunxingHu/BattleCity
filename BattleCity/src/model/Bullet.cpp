@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "Bomb.h"
 
 Bullet::Bullet(Point pos, Direction dir, COLORREF color) {
 	m_pos = pos;
@@ -30,6 +31,7 @@ void Bullet::Move()
 		CalculateSpace();
 		if (m_space.GetStartPoint().GetY() < Graphic::GetBattleSpace().GetStartPoint().GetY())
 		{
+			m_pos.SetY(Graphic::GetBattleSpace().GetStartPoint().GetY());
 			m_disappear = true;
 		}
 		break;
@@ -38,6 +40,7 @@ void Bullet::Move()
 		CalculateSpace();
 		if (m_space.GetEndPoint().GetY() > Graphic::GetBattleSpace().GetEndPoint().GetY())
 		{
+			m_pos.SetY(Graphic::GetBattleSpace().GetEndPoint().GetY());
 			m_disappear = true;
 		}
 		break;
@@ -46,6 +49,7 @@ void Bullet::Move()
 		CalculateSpace();
 		if (m_space.GetStartPoint().GetX() < Graphic::GetBattleSpace().GetStartPoint().GetX())
 		{
+			m_pos.SetX(Graphic::GetBattleSpace().GetStartPoint().GetX());
 			m_disappear = true;
 		}
 		break;
@@ -54,6 +58,7 @@ void Bullet::Move()
 		CalculateSpace();
 		if (m_space.GetEndPoint().GetX() > Graphic::GetBattleSpace().GetEndPoint().GetX())
 		{
+			m_pos.SetX(Graphic::GetBattleSpace().GetEnd:wqPoint().GetX());
 			m_disappear = true;
 		}
 		break;
@@ -65,4 +70,9 @@ void Bullet::Move()
 void Bullet::CalculateSpace()
 {
 	m_space.Set(m_pos.GetX() - 2, m_pos.GetY() - 2, m_pos.GetX() + 2, m_pos.GetY() + 2);
+}
+
+void Bullet::Boom(std::list<Object*>& lstBombs)
+{
+	lstBombs.push_back(new Bomb(m_pos, BombType::SMALL));
 }

@@ -27,6 +27,10 @@ void main()
 	// 暂停标记
 	bool skip = false;
 
+	// Bomb list
+	std::list<Object*> lstBomb;
+	lstBomb.clear();
+
 	// 创建敌方坦克
 	srand((unsigned)time(NULL));
 	Tank* pEnemyTank[MAX_TANKS];
@@ -99,10 +103,30 @@ void main()
 			for (std::list<Object*>::iterator it = lstBullets.begin(); it != lstBullets.end();) {
 				(*it)->Move();
 				if ((*it)->IsDisappear()) {
+					// Add a bomb
+					(*it)->Boom(lstBomb);
+
+					// delete the bullet
 					delete *it;
 					it = lstBullets.erase(it);
 					continue;
 				}
+				(*it)->Display();
+				it++;
+			}
+
+			//Draw Bombs
+			for (list<Object*>::iterator it = lstBomb.begin(); it != lstBomb.end();)
+			{
+				(*it)->Move();
+
+				if ((*it)->IsDisappear())
+				{
+					delete *it;
+					it = lstBomb.erase(it);
+					continue;
+				}
+
 				(*it)->Display();
 				it++;
 			}
@@ -121,6 +145,12 @@ void main()
 		delete *it;
 	}
 	lstBullets.clear();
+
+	for (list<Object*>::iterator it = lstBomb.begin(); it != lstBomb.end(); it++)
+	{
+		delete *it;
+	}
+	lstBomb.clear();
 
 	Graphic::Destory();
 }

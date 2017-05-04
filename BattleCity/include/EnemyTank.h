@@ -18,7 +18,8 @@ public:
 
 	void Display();
 	void Move();
-
+	// boom
+	void Boom(std::list<Object*>& lstBombs) {}
 protected:
 	void CalculateSpace();
 	void GenRandomTank();

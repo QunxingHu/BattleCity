@@ -26,6 +26,10 @@ public:
 
 	// shoot
 	void Shoot(std::list<Object*>& lstBullets);
+
+	// boom
+	void Boom(std::list<Object*>& lstBombs) {}
+
 protected:
 	// 绘制坦克主体
 	void DrawTankBody();

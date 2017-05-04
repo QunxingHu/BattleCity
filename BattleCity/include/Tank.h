@@ -33,6 +33,9 @@ public:
 		return m_disappear;
 	}
 
+	// boom
+	void Boom(std::list<Object*>& lstBombs){}
+
 protected:
 	// º∆À„ ∆¡¶∑∂Œß
 	void CalculateSpace(){}

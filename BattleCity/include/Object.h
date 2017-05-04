@@ -2,6 +2,7 @@
 #define __OBJECT_H__
 
 #include "Graphic.h"
+#include <list>
 
 /* 坦克 和 子弹的基类 */
 enum Direction
@@ -23,6 +24,9 @@ public:
 
 	// 判断是否消失
 	virtual bool IsDisappear() = 0;
+
+	// 爆炸效果
+	virtual void Boom(std::list<Object*>& lstBombs) = 0;
 
 protected:
 	

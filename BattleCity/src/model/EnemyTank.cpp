@@ -119,3 +119,8 @@ void EnemyTank::RandomDir()
 {
 	m_dir = (Direction)(Direction::UP + (rand() % 4));
 }
+
+void EnemyTank::Boom(std::list<Object*>& lstBombs)
+{
+	lstBombs.push_back(new Bomb(m_pos, BombType::LARGE));
+}

@@ -53,3 +53,17 @@ Rect::~Rect()
 {
 
 }
+
+Point Rect::GetTRPoint() const
+{
+	Point p = m_startPoint;
+	p.SetX(m_endPoint.GetX());
+	return p;
+}
+
+Point Rect::GetBLPoint() const
+{
+	Point p = m_startPoint;
+	p.SetY(m_endPoint.GetY());
+	return p;
+}

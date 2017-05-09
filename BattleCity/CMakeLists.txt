@@ -2,13 +2,15 @@ project (BattleCity)
 
 # set include dirs
 set (PRIVATE_INCLUDE_DIRS
-	"${PROJECT_SOURCE_DIR}/include")
+	"${PROJECT_SOURCE_DIR}/include"
+	"${PROJECT_SOURCE_DIR}/src/utils")
 
 # set source files
 set (SRC_DIRS
 		"${PROJECT_SOURCE_DIR}/src"
 		"${PROJECT_SOURCE_DIR}/src/model"
-		"${PROJECT_SOURCE_DIR}")
+		"${PROJECT_SOURCE_DIR}"
+		"${PROJECT_SOURCE_DIR}/src/utils")
 
 foreach (src_dir ${SRC_DIRS})
 	file(GLOB srcs ${src_dir}/*.cpp)

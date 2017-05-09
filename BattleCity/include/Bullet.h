@@ -17,7 +17,13 @@ public:
 	{
 		return m_disappear;
 	}
+	Rect GetSpace() { return m_space; }
+	void SetDisappear()
+	{
+		m_disappear = true;
+	}
 protected:
 	void CalculateSpace();
+
 };
 #endif // !

@@ -34,6 +34,7 @@ protected:
 	// 绘制坦克主体
 	void DrawTankBody();
 	void CalculateSpace();
+	Rect GetSpace() { return m_space; }
 };
 
 #endif // !__MAIN_TANK_

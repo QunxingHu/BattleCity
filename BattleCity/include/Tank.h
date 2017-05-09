@@ -9,6 +9,7 @@
 
 #include "Object.h"
 #include <list>
+#include "Bomb.h"
 
 class Tank: public Object
 {
@@ -34,8 +35,13 @@ public:
 	}
 
 	// boom
-	void Boom(std::list<Object*>& lstBombs){}
+	void Boom(std::list<Object*>& lstBombs){ lstBombs.push_back(new Bomb(m_pos, LARGE)); }
 
+	void SetDisappear()
+	{
+		m_disappear = true;
+	}
+	Rect GetSpace() { return m_space; }
 protected:
 	// º∆À„ ∆¡¶∑∂Œß
 	void CalculateSpace(){}

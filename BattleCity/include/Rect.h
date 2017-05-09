@@ -21,7 +21,8 @@ public:
 
 	void Set(const Point &start, const Point& end);
 	void Set(int x1, int y1, int x2, int y2);
-
+	Point GetTRPoint() const;	// 获取 top right point
+	Point GetBLPoint() const;	// 获取 bottom left point
 
 private:
 	Point m_startPoint; //左上角

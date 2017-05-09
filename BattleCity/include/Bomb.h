@@ -20,9 +20,14 @@ public:
 	void Move();
 	void Boom(std::list<Object*>& lstBombs);
 	bool IsDisappear();
-
+	Rect GetSpace() { return m_space; }
+	void SetDisappear()
+	{
+		m_disappear = true;
+	}
 protected:
 	void CalculateSpace();
+	
 	BombType m_type;
 	int m_timer;
 };

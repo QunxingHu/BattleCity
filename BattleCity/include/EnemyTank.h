@@ -19,9 +19,10 @@ public:
 	void Display();
 	void Move();
 	// boom
-	void Boom(std::list<Object*>& lstBombs) {}
+	void Boom(std::list<Object*>& lstBombs);
 protected:
 	void CalculateSpace();
+	Rect GetSpace() { return m_space; }
 	void GenRandomTank();
 	void RandomDir();	// 随机转向
 	int  m_stepCnt;		// 统计走的步数， MAX_STEP 后转向

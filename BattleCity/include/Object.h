@@ -27,7 +27,12 @@ public:
 
 	// 爆炸效果
 	virtual void Boom(std::list<Object*>& lstBombs) = 0;
+	
+	// 获取势力范围
+	virtual Rect GetSpace() = 0;
 
+	virtual void SetDisappear() = 0;
+	
 protected:
 	
 	// 计算势力范围

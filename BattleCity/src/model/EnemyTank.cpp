@@ -8,6 +8,7 @@ void EnemyTank::GenRandomTank()
 	m_dir = (Direction)(Direction::UP + (rand() % 4));
 	m_step = 2;
 	m_stepCnt = rand() % MAX_STEP; // 起始步数随机
+	m_bNeedShoot = false;
 }
 
 void EnemyTank::Display()
@@ -92,6 +93,10 @@ void EnemyTank::Move()
 	}
 	CalculateSpace();
 	m_stepCnt++;
+	if (m_stepCnt % MAX_STEP_SHOOT == 0)
+	{
+		m_bNeedShoot = true;
+	}
 	if (m_stepCnt >= MAX_STEP) {
 		m_stepCnt = 0;
 		RandomDir();
@@ -123,4 +128,16 @@ void EnemyTank::RandomDir()
 void EnemyTank::Boom(std::list<Object*>& lstBombs)
 {
 	lstBombs.push_back(new Bomb(m_pos, BombType::LARGE));
+}
+
+void EnemyTank::Shoot(std::list<Object*>& lstBullets)
+{
+	Bullet* pBullet = new Bullet(m_pos, m_dir, m_color);
+	lstBullets.push_back(pBullet);
+	m_bNeedShoot = false;
+}
+
+bool EnemyTank::NeedShoot()
+{
+	return m_bNeedShoot;
 }

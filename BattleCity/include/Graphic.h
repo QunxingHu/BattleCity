@@ -7,6 +7,7 @@
 
 #include <graphics.h>
 #include "Rect.h"
+#include "Setting.h"
 
 // 定义屏幕长度宽度
 #define SCREEN_WIDTH 1024
@@ -27,12 +28,13 @@ public:
 	static int GetScreenHeight();
 	static void DrawBattleSpace();	// 绘制坦克作战区域
 	static Rect GetBattleSpace();	// 获取作战区域
-
+	static void ShowScore();	// 绘制成绩
 private:
 	static int m_screen_width;
 	static int m_screen_height;
 	static Rect m_rectScreen;		// 屏幕矩形
 	static Rect m_rectBattleSpace;	// 作战区域矩形
+	static char m_pArray[100];
 };
 
 #endif // !__GRAPHIC_H

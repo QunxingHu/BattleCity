@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define MAX_TANKS 15
+#define MAX_TANKS 5
 
 // 创建坦克
 MainTank mainTank;
@@ -30,6 +30,9 @@ list<Tank* > lstEnemyTank;
 
 // 主坦克子弹
 std::list<Object*> lstMainBullets;
+
+// 地方坦克子弹
+std::list<Object*> lstEnemyBullets;
 
 // 检查坦克是否被击中
 void CheckCrash()
@@ -120,6 +123,11 @@ void main()
 			for (list<Tank*>::iterator itt = lstEnemyTank.begin(); itt != lstEnemyTank.end(); itt++)
 			{
 				(*itt)->Move();
+				EnemyTank* p = (EnemyTank*)*itt;
+				if (p->NeedShoot())
+				{
+					p->Shoot(lstEnemyBullets);
+				}
 				if ((*itt)->IsDisappear()) {
 					// Add bomb
 					(*itt)->Boom(lstBomb);
@@ -133,7 +141,20 @@ void main()
 				(*itt)->Display();
 			}
 			
+			for (std::list<Object*>::iterator it = lstEnemyBullets.begin(); it != lstEnemyBullets.end();) {
+				(*it)->Move();
+				if ((*it)->IsDisappear()) {
+					// Add a bomb
+					(*it)->Boom(lstBomb);
 
+					// delete the bullet
+					delete *it;
+					it = lstEnemyBullets.erase(it);
+					continue;
+				}
+				(*it)->Display();
+				it++;
+			}
 			
 			for (std::list<Object*>::iterator it = lstMainBullets.begin(); it != lstMainBullets.end();) {
 				(*it)->Move();
@@ -165,6 +186,10 @@ void main()
 				(*it)->Display();
 				it++;
 			}
+
+			// Draw Score
+			Graphic::ShowScore();
+
 		}
 
 		Sleep(100);

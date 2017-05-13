@@ -13,7 +13,7 @@ public:
 		m_dir = Direction::UP;
 		this->CalculateSpace();
 		m_color = YELLOW;
-		m_step = 4;
+		m_step = 6;
 	}
 	~MainTank() {}
 
@@ -24,17 +24,21 @@ public:
 	// 设置移动方向
 	void SetDirection(Direction dir);
 
+	Direction GetDirection()
+	{
+		return m_dir;
+	}
 	// shoot
 	void Shoot(std::list<Object*>& lstBullets);
 
 	// boom
 	void Boom(std::list<Object*>& lstBombs) {}
-
+	Rect GetSpace() { return m_space; }
 protected:
 	// 绘制坦克主体
 	void DrawTankBody();
 	void CalculateSpace();
-	Rect GetSpace() { return m_space; }
+	
 };
 
 #endif // !__MAIN_TANK_

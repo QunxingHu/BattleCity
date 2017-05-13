@@ -24,7 +24,17 @@ void Setting::TankDamaged()
 	m_nSumScore += m_nTankScore;
 	m_nTankLevel = m_nSumScore / 150 + 1;
 	m_nTankSum++;
+	
+	// 达到500分加一命
+	if (m_nSumScore % 500 < m_nTankScore)
+		m_nLife++;
+
 	if (m_nTankNum == 0) {
 		m_bNewLevel = true;
 	}
+}
+
+void Setting::Die()
+{
+	m_nLife--;
 }

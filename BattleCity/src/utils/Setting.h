@@ -39,7 +39,8 @@ public:
 	{
 		return m_nTankNum;
 	}
-
+	static void Die();
+	static bool m_bNewLevel;	//新关卡
 private:
 	static int m_nLife; //生命值
 	static int m_nGameLevel; //当前游戏关卡
@@ -48,6 +49,5 @@ private:
 	static int m_nSumScore;	//总分
 	static int m_nTankScore; //击毁坦克得分
 	static int m_nTankSum;	//击毁坦克数量
-	static bool m_bNewLevel;	//新关卡
 };
 #endif // !__SETTING_H__

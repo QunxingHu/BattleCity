@@ -29,6 +29,8 @@ public:
 	static void DrawBattleSpace();	// 绘制坦克作战区域
 	static Rect GetBattleSpace();	// 获取作战区域
 	static void ShowScore();	// 绘制成绩
+	static void ShowGameLevel(int level); //显示关卡
+	static void ShowGameOver();
 private:
 	static int m_screen_width;
 	static int m_screen_height;

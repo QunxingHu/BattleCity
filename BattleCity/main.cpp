@@ -22,6 +22,8 @@ bool loop = true;
 // 暂停标记
 bool skip = false;
 
+bool bGameOver = false;
+
 // Bomb list
 list<Object*> lstBomb;
 
@@ -37,6 +39,7 @@ std::list<Object*> lstEnemyBullets;
 // 检查坦克是否被击中
 void CheckCrash()
 {
+	// check enemy tank damage
 	for (list<Object*>::iterator it = lstMainBullets.begin(); it != lstMainBullets.end(); it++)
 	{
 		for (list<Tank*>::iterator itt = lstEnemyTank.begin(); itt != lstEnemyTank.end(); itt++)
@@ -45,6 +48,23 @@ void CheckCrash()
 			{
 				(*it)->SetDisappear();
 				(*itt)->SetDisappear();
+			}
+		}
+	}
+	//check main tank damage
+	for (list<Object*>::iterator it = lstEnemyBullets.begin(); it != lstEnemyBullets.end(); it++)
+	{
+		if (Shape::CheckIntersect((*it)->GetSpace(), mainTank.GetSpace()))
+		{
+			Setting::Die();
+
+			if (Setting::GetLife() > 0)
+			{
+				(*it)->SetDisappear();
+			}
+			else
+			{
+				mainTank.SetDisappear();
 			}
 		}
 	}
@@ -59,18 +79,23 @@ void main()
 
 	// 创建敌方坦克
 	srand((unsigned)time(NULL));
+	/*
 	for (int i = 0; i < MAX_TANKS; i++)
 	{
 		lstEnemyTank.push_back(new EnemyTank());
 	}
-
+	*/
 	lstMainBullets.clear();
 
+	Direction dirBak;
 	while (loop)
 	{
 		if (_kbhit())
 		{
 			int key = getch();
+
+			if (skip && key != 13)
+				continue;
 
 			switch (key)
 			{
@@ -107,6 +132,19 @@ void main()
 					else
 						skip = true;
 					break;
+				// 超级武器
+				case 113:
+					dirBak = mainTank.GetDirection();
+					mainTank.SetDirection(Direction::UP);
+					mainTank.Shoot(lstMainBullets);
+					mainTank.SetDirection(Direction::DOWN);
+					mainTank.Shoot(lstMainBullets);
+					mainTank.SetDirection(Direction::LEFT);
+					mainTank.Shoot(lstMainBullets);
+					mainTank.SetDirection(Direction::RIGHT);
+					mainTank.Shoot(lstMainBullets);
+					mainTank.SetDirection(dirBak);
+					break;
 				default:
 					break;
 				}
@@ -114,13 +152,49 @@ void main()
 
 		if (!skip)
 		{
+			if (bGameOver)
+				break;
 			cleardevice();
-			CheckCrash();
 			Graphic::DrawBattleSpace();
+			Graphic::ShowScore();
+
+			if (Setting::m_bNewLevel)
+			{
+				Setting::m_bNewLevel = false;
+
+				Setting::NewGameLevel();
+
+				Graphic::ShowGameLevel(Setting::GetGameLevel());
+
+				for (int i = 0; i < Setting::GetTankNum(); i++)
+				{
+					EnemyTank* p = new EnemyTank();
+					lstEnemyTank.push_back(p);
+				}
+
+				// 设置暂停，按Enter开始
+				skip = true;
+				continue;
+
+			}
+
+
+			CheckCrash();
+
+
+			if (mainTank.IsDisappear())
+			{
+				skip = true;
+				bGameOver = true;
+
+				Graphic::ShowGameOver();
+
+				continue;
+			}
 			mainTank.Move();
 			mainTank.Display();
 
-			for (list<Tank*>::iterator itt = lstEnemyTank.begin(); itt != lstEnemyTank.end(); itt++)
+			for (list<Tank*>::iterator itt = lstEnemyTank.begin(); itt != lstEnemyTank.end();)
 			{
 				(*itt)->Move();
 				EnemyTank* p = (EnemyTank*)*itt;
@@ -129,16 +203,17 @@ void main()
 					p->Shoot(lstEnemyBullets);
 				}
 				if ((*itt)->IsDisappear()) {
+					Setting::TankDamaged();
 					// Add bomb
 					(*itt)->Boom(lstBomb);
 					
 					//delete Tank
 					delete *itt;
 					itt = lstEnemyTank.erase(itt);
-
 					continue;
 				}
 				(*itt)->Display();
+				itt++;
 			}
 			
 			for (std::list<Object*>::iterator it = lstEnemyBullets.begin(); it != lstEnemyBullets.end();) {
